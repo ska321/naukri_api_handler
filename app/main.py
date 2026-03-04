@@ -122,16 +122,18 @@ def scrape(
         with sync_playwright() as p:
 
             browser = p.chromium.launch(
-                headless=False,
-                args=["--start-maximized", "--disable-blink-features=AutomationControlled"]
-            )
-
+    headless=True,
+    args=[
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-blink-features=AutomationControlled"
+    ]
+)
             context = browser.new_context(
-                viewport={"width": 1366, "height": 768},
-                user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-                locale="en-IN",
-                timezone_id="Asia/Kolkata"
-            )
+    viewport={"width": 1366, "height": 768},
+    locale="en-IN",
+    timezone_id="Asia/Kolkata"
+)
 
             page = context.new_page()
             page.goto(url, timeout=60000)
